@@ -1,7 +1,7 @@
 <template>
   <div class="home-swiper">
     <swiper :options="swiperOptions">
-      <swiper-slide v-for="item in list" :key="index" class="swiper-item">
+      <swiper-slide v-for="item in list" :key="item.id" class="swiper-item">
         <a :href="item.link">
           <img :src="item.image" alt="" class="swiper-img">
         </a>
