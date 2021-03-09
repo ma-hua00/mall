@@ -69,13 +69,21 @@
         scroll:null,
         isShowBackTop:false,
         tabOffSetTop:0,
-        isTabShow:false
+        isTabShow:false,
+        saveY:0
       }
     },
     computed:{
       showGoods(){
         return this.goods[this.goodstype].list
       }
+    },
+    activated(){
+      this.$refs.scroll.scrollTo(0,this.saveY,0)
+      this.$refs.scroll.refresh()
+    },
+    deactivated(){
+      this.saveY = this.$refs.scroll.scrollY()
     },
     created() {
       //1.请求多个数据
@@ -125,7 +133,7 @@
 
       // 返回顶部方法
       backClick(){
-        this.$refs.scroll.scrollto(0,0)
+        this.$refs.scroll.scrollTo(0,0)
       },
 
       contentScroll(position){

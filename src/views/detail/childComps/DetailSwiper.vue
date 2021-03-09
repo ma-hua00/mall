@@ -1,10 +1,8 @@
 <template>
-  <div class="swiper">
+  <div class="detail-swiper">
     <swiper :options="swiperOptions">
-      <swiper-slide v-for="item in list" :key="item.id" class="swiper-item">
-        <a :href="item.link">
-          <img :src="item.image" alt="" class="swiper-img">
-        </a>
+      <swiper-slide v-for="item in topImage" :key="item.id" class="swiper-item">
+          <img :src="item" alt="" class="swiper-img">
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
@@ -13,7 +11,7 @@
 
 <script>
 export default {
-  name: "Swiper",
+  name: "HomeSwiper",
   data(){
     return{
       swiperOptions:{
@@ -25,20 +23,22 @@ export default {
     }
   },
   props:{
-    list:{
+    topImage:{
       type:Array,
-      required:true
+      default(){
+        return []
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-.swiper{
+.detail-swiper{
   overflow: hidden;
   width: 100%;
-  height: 0;
-  padding-bottom: 55%;
+  height: 300px;
+  padding-bottom: 60%;
   position: relative;
 }
 .swiper-img{
@@ -46,7 +46,7 @@ export default {
 }
 .swiper-pagination{
   position: absolute;
-  bottom: 4px;
+  bottom: 190px;
   --swiper-theme-color: rgba(212,62,46,1.0);
 }
 </style>
