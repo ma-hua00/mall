@@ -29,13 +29,12 @@
 <script>
   import {getHomeMultidata} from "network/home";
   import {getHomeGoods} from "network/home";
-  import {debounce} from "common/utils";
+  import {itemListenerMixin,backTopMixin} from "common/mixin";
 
   import NavBar from "components/common/navbar/NavBar";
   import TabControl from "components/content/tabControl/TabControl";
   import HomeSwiper from "views/home/childComps/HomeSwiper";
   import Scroll from "components/common/scroll/scroll";
-  import BackTop from "components/content/backTop/BackTop";
 
 
   import HomeRecommendView from "./childComps/HomeRecommendView";
@@ -47,7 +46,6 @@
   export default {
     name: "Home",
     components: {
-      BackTop,
       Scroll,
       GoodsList,
       TabControl,
@@ -56,6 +54,7 @@
       HomeSwiper,
       HomeRecommendView,
     },
+    mixins:[itemListenerMixin,backTopMixin],
     data(){
       return {
         banners: [],
@@ -67,10 +66,9 @@
         },
         goodstype:'pop',
         scroll:null,
-        isShowBackTop:false,
         tabOffSetTop:0,
         isTabShow:false,
-        saveY:0
+        saveY:0,
       }
     },
     computed:{
@@ -83,7 +81,11 @@
       this.$refs.scroll.refresh()
     },
     deactivated(){
-      this.saveY = this.$refs.scroll.scrollY()
+      //1.获取离开时y的值
+      this.saveY = this.$refs.scroll.getScrollY()
+      //2.离开时停止监听imgLoad事件
+      this.$bus.$off('goodsItemImgLoad',this.itemImgListener)
+
     },
     created() {
       //1.请求多个数据
@@ -96,14 +98,7 @@
 
     },
     mounted() {
-      //监听goodsitem中图片加载完成
-      const refresh = debounce(this.$refs.scroll.refresh,50)
 
-      this.$bus.$on('goodsItemImgLoad', () => {
-        if (this.$refs.scroll !== undefined){
-          refresh()
-        }
-      })
     },
     methods:{
       /*
@@ -129,12 +124,6 @@
         this.tabOffSetTop = this.$refs.tabcontrol2.$el.offsetTop
       },
 
-
-
-      // 返回顶部方法
-      backClick(){
-        this.$refs.scroll.scrollTo(0,0)
-      },
 
       contentScroll(position){
         this.isShowBackTop = (-position.y) > 1000

@@ -56,7 +56,7 @@ export default {
     refresh(){
       this.scroll && this.scroll.refresh()
     },
-    scrollY(){
+    getScrollY(){
       return this.scroll ? this.scroll.y : 0
     }
   }
