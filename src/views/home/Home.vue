@@ -132,6 +132,7 @@
 
       loadMore(){
         this.getHomeGoods(this.goodstype)
+        this.$refs.scroll.refresh()
       },
 
       /*

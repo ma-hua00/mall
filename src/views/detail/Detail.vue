@@ -128,7 +128,7 @@
         product.image = this.topImage[0]
         product.iid = this.iid
 
-        this.$store.commit('addCart',product)
+        this.$store.dispatch('addCart',product)
       }
     },
     destroyed() {

@@ -1,0 +1,5 @@
+export const ADD_CART_LIST_COUNT = 'addCartListCount'
+export const PUSH_CART_LIST = 'pushCartList'
+export const ADD_CART_TOTAL_PRICE = 'addCartTotalPrice'
+export const MINUS_CART_TOTAL_PRICE = 'minusCartTotalPrice'
+export const CART_IS_SELECT = 'cartIsSelect'
