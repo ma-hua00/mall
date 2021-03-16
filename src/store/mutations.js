@@ -1,9 +1,12 @@
 import {
   ADD_CART_LIST_COUNT,
   PUSH_CART_LIST,
-  ADD_CART_TOTAL_PRICE,
-  MINUS_CART_TOTAL_PRICE,
   CART_IS_SELECT,
+  CART_CHECK_ALL_SELECT,
+  CART_IS_CHECK_ALL,
+  CART_UN_CHECK_ALL,
+  UPDATE_CART_TOTAL_PRICE,
+  UPDATE_CART_SELECT
 } from './mutationsType'
 
 
@@ -19,13 +22,39 @@ export default {
     payload.checked = false
     state.cartList.push(payload)
   },
-  [ADD_CART_TOTAL_PRICE](state,payload){
-    state.totalPrice += payload.price * 1
-  },
-  [MINUS_CART_TOTAL_PRICE](state,payload){
-    state.totalPrice -= payload.price * 1
+  [UPDATE_CART_TOTAL_PRICE](state){
+    state.totalPrice = 0
+    for (let item of state.cartList){
+      if (item.checked){
+        state.totalPrice += (Number(item.price) * Number(item.count))
+      }
+    }
   },
   [CART_IS_SELECT](state,payload){
-    state.cartSelect += payload
+    if (payload === 'selectAll'){
+      state.cartSelect = state.cartList.length
+    }else if (payload === 'unSelectAll'){
+      state.cartSelect = 0
+    }else {
+      state.cartSelect += payload
+      if (state.cartSelect === state.cartList.length){
+        state.allSelect = true
+      }else {
+        state.allSelect = false
+      }
+    }
   },
+  [CART_CHECK_ALL_SELECT](state){
+    state.allSelect = !state.allSelect
+  },
+  [CART_IS_CHECK_ALL](state){
+    for (let item of state.cartList){
+      item.checked = true
+    }
+  },
+  [CART_UN_CHECK_ALL](state){
+    for (let item of state.cartList){
+      item.checked = false
+    }
+  }
 }

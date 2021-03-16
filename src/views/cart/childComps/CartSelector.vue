@@ -2,7 +2,7 @@
     <div
       class="item-selector"
       :class="{active : isSelect}">
-      <img src="~assets/img/cart/tick.svg" alt="">
+      <img src="~assets/img/cart/tick.svg" v-if="isSelect"  alt="">
     </div>
 </template>
 

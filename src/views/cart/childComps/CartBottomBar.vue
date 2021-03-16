@@ -1,7 +1,11 @@
 <template>
   <div class="bottom-bar">
     <div class="item-select">
-      <cart-selector class="selector"/>
+      <cart-selector
+        class="selector"
+        @click.native="isSelect"
+        :is-select="allSelect"/>
+      <span>全选</span>
     </div>
     <div class="item-total">
       <span>合计:￥{{this.$store.state.totalPrice}}</span>
@@ -13,10 +17,22 @@
 </template>
 
 <script>
-import CartSelector from "@/views/cart/childComps/CartSelector";
+import CartSelector from "views/cart/childComps/CartSelector";
+import {mapGetters} from "vuex";
 export default {
   name: "CartBottomBar",
-  components: {CartSelector}
+  components: {CartSelector},
+  computed:{
+    ...mapGetters({
+      allSelect:'CartAllSelect',
+
+    })
+  },
+  methods:{
+    isSelect(){
+      this.$store.dispatch('CartCheckAll')
+    }
+  }
 }
 </script>
 
@@ -28,18 +44,19 @@ export default {
     position: relative;
     align-items: center;
     font-size: 15px;
+    background-color: #eee;
   }
   .bottom-bar>div{
     flex: 1;
   }
   .item-select{
     text-align: center;
-  }
-  .selector{
-    background-color: red;
-  }
-  .item-total{
+    display: flex;
+    align-items: center;
 
+  }
+  .item-select .selector{
+    margin: 0 5px 0 10px;
   }
   .item-button{
     height: 50px;
@@ -49,5 +66,4 @@ export default {
     border: 0;
     background: linear-gradient(to right, #ff6034, #ee0a24);
   }
-
 </style>

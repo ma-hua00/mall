@@ -47,7 +47,7 @@ export default {
     padding: 5px;
   }
   .item-check{
-    margin: 40px 3px 0 3px;
+    margin-top: 42px;
   }
   .item-img{
     padding: 5px;
@@ -70,8 +70,7 @@ export default {
     overflow: hidden;
     padding: 5px 10px;
     color: #333333;
-    width: 88%;
-    position: relative;
+    width: 60%;
   }
   .list-info .item-desc{
     font-size: 14px;
