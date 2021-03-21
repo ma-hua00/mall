@@ -5,7 +5,4 @@ export default {
   CartList(state){
     return state.cartList
   },
-  CartAllSelect(state) {
-    return state.allSelect
-  }
 }

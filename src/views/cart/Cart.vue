@@ -34,7 +34,7 @@ export default {
   },
   activated() {
     this.$refs.scroll.refresh()
-  }
+  },
 }
 </script>
 

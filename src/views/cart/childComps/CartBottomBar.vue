@@ -3,15 +3,15 @@
     <div class="item-select">
       <cart-selector
         class="selector"
-        @click.native="isSelect"
-        :is-select="allSelect"/>
+        :isSelect="selectAll"
+        @click.native="checkClick(selectAll)"/>
       <span>全选</span>
     </div>
     <div class="item-total">
-      <span>合计:￥{{this.$store.state.totalPrice}}</span>
+      <span>合计:￥{{totalPrice}}</span>
     </div>
     <div class="item-button">
-      <div>去计算({{this.$store.state.cartSelect}})</div>
+      <div>去计算({{checkLength}})</div>
     </div>
   </div>
 </template>
@@ -23,15 +23,26 @@ export default {
   name: "CartBottomBar",
   components: {CartSelector},
   computed:{
-    ...mapGetters({
-      allSelect:'CartAllSelect',
-
-    })
+    ...mapGetters(['CartList']),
+    totalPrice(){
+      return this.CartList.filter(item => {
+        return item.checked
+      }).reduce((preValue,item) => {
+        return preValue + item.price * item.count
+      },0).toFixed(2)
+    },
+    checkLength(){
+      return this.CartList.filter(item => item.checked).length
+    },
+    selectAll(){
+      if (this.CartList.length === 0) return false
+      return !this.CartList.find(item => !item.checked)//没有被选中的话返还false 全部选中返还true
+    }
   },
   methods:{
-    isSelect(){
-      this.$store.dispatch('CartCheckAll')
-    }
+    checkClick(condition){
+      this.$store.dispatch('cartSelectAll',condition)
+    },
   }
 }
 </script>

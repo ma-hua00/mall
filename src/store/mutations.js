@@ -1,12 +1,7 @@
 import {
   ADD_CART_LIST_COUNT,
   PUSH_CART_LIST,
-  CART_IS_SELECT,
-  CART_CHECK_ALL_SELECT,
-  CART_IS_CHECK_ALL,
-  CART_UN_CHECK_ALL,
-  UPDATE_CART_TOTAL_PRICE,
-  UPDATE_CART_SELECT
+  CART_SELECT_ALL_CHANGE,
 } from './mutationsType'
 
 
@@ -22,39 +17,8 @@ export default {
     payload.checked = false
     state.cartList.push(payload)
   },
-  [UPDATE_CART_TOTAL_PRICE](state){
-    state.totalPrice = 0
-    for (let item of state.cartList){
-      if (item.checked){
-        state.totalPrice += (Number(item.price) * Number(item.count))
-      }
-    }
+  [CART_SELECT_ALL_CHANGE](state,payload){
+    //forEach高阶函数 遍历并修改内容
+    state.cartList.forEach(item => item.checked = payload)
   },
-  [CART_IS_SELECT](state,payload){
-    if (payload === 'selectAll'){
-      state.cartSelect = state.cartList.length
-    }else if (payload === 'unSelectAll'){
-      state.cartSelect = 0
-    }else {
-      state.cartSelect += payload
-      if (state.cartSelect === state.cartList.length){
-        state.allSelect = true
-      }else {
-        state.allSelect = false
-      }
-    }
-  },
-  [CART_CHECK_ALL_SELECT](state){
-    state.allSelect = !state.allSelect
-  },
-  [CART_IS_CHECK_ALL](state){
-    for (let item of state.cartList){
-      item.checked = true
-    }
-  },
-  [CART_UN_CHECK_ALL](state){
-    for (let item of state.cartList){
-      item.checked = false
-    }
-  }
 }

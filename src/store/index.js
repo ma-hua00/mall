@@ -11,9 +11,6 @@ Vue.use(Vuex)
 
 const state = {
   cartList:[],
-  cartSelect:0,
-  totalPrice:0,
-  allSelect:false
 }
 
 const store = new Vuex.Store({

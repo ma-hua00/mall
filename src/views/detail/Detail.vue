@@ -14,7 +14,6 @@
       <goods-list ref="recommend" :goods="recommends"/>
     </scroll>
     <back-top @click.native="backClick" v-show="isShowBackTop"/>
-    <hint :titles="'已添加到购物车'" v-if="isShowHint"/>
     <detail-bottom-bar @addToCart="addToCart"/>
   </div>
 </template>
@@ -33,13 +32,12 @@
   import DetailCommentInfo from "views/detail/childComps/DetailCommentInfo";
   import GoodsList from "components/content/goods/GoodsList";
   import DetailBottomBar from "views/detail/childComps/DetailBottomBar";
-  import Hint from "@/components/content/hint/Hint";
+  import {mapActions} from "vuex"
 
 
   export default {
     name: "Detail",
     components: {
-      Hint,
       DetailBottomBar,
       GoodsList,
       DetailCommentInfo,
@@ -89,6 +87,7 @@
       })
     },
     methods:{
+      ...mapActions(['addCart']),
       imageLoad(){
         this.$refs.scroll.refresh()
         this.themeTopYs = []
@@ -132,11 +131,9 @@
         product.image = this.topImage[0]
         product.iid = this.iid
 
-        this.$store.dispatch('addCart',product)
-        this.isShowHint = true
-        setTimeout(() => {
-          this.isShowHint = false
-        },1000)
+        this.addCart(product).then(res => {
+          this.$toast.show(res)
+        })
       }
     },
     destroyed() {

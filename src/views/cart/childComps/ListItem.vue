@@ -33,8 +33,6 @@ export default {
   methods:{
     isSelect(){
       this.product.checked = ! this.product.checked
-      this.$store.dispatch('CartItemSelect',this.product)
-      console.log(this.product.checked);
     }
   }
 }
